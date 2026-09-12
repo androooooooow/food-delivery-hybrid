@@ -16,7 +16,7 @@ connectMongoDB();
 
 app.use('/api/menu', require('./routes/menu')); //
 app.use('/api/orders', require('./routes/orders'));
-
+app.use('/api/customers', require('./routes/recentlyViewed'));
 
 app.get('/', (req, res) => {
   res.send('Food Delivery Hybrid API is running...');
