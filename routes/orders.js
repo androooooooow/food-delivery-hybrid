@@ -38,6 +38,7 @@ router.post('/', async (req, res) => {
       );
     }
 
+    /*
     // Sync agad sa MongoDB Read Model pagka-create
     await OrderCache.findOneAndUpdate(
       { orderId: newOrder.id },
@@ -50,6 +51,32 @@ router.post('/', async (req, res) => {
       },
       { upsert: true, new: true }
     );
+    */
+
+//Laboratory Challenge 2 – Failure Simulation ===================================================================================
+
+    let mongoSyncSuccessful = true;
+
+    // failure simulation 
+    try {
+      throw new Error('Simulated MongoDB synchronization failure'); 
+    } catch (syncError) {
+      mongoSyncSuccessful = false;
+
+      console.log('NoSQL synchronization failed.');
+      console.log('SQL remains the source of truth.');
+      console.log('Reason:', syncError.message);
+    }
+
+      // return success because SQL saved the order
+      res.status(201).json({
+        message: 'Order created in SQL, but MongoDB synchronization failed',
+        sqlSaved: true,
+        mongoSyncSuccessful,
+        order: newOrder
+      });
+      
+//===============================================================================================================================
 
     res.status(201).json({
       message: 'Order created successfully',
