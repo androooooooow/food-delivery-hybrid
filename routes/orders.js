@@ -145,7 +145,7 @@ router.put('/:id/status', async (req, res) => {
             totalAmount: updatedOrder.total_amount,
             status: updatedOrder.status
           },
-          { new: true, upsert: true }
+          { returnDocument: 'after', upsert: true }
         );
         console.log(`⏱️ [5s Delay Complete] MongoDB cache updated for Order ${orderId}`);
       } catch (syncErr) {
